@@ -1,4 +1,4 @@
-from tictactoe import findWinner, findTie
+from tictactoe import findWinner, findTie, makeBoard
 
 if __name__ == "__main__":
     # (Test Name, Test Init, Solution, Function)
@@ -111,6 +111,38 @@ if __name__ == "__main__":
             False,
             "findTie"
         ),
+        (
+            "Variable Board 1",
+            (4,4),
+            [
+                [None, None, None, None], 
+                [None, None, None, None], 
+                [None, None, None, None], 
+                [None, None, None, None]
+            ],
+            "makeBoard"
+        ),
+        (
+            "Variable Board 2",
+            (3,4),
+            [
+                [None, None, None], 
+                [None, None, None], 
+                [None, None, None], 
+                [None, None, None]
+            ],
+            "makeBoard"
+        ),
+        (
+            "Variable Board 3",
+            (4,3),
+            [
+                [None, None, None, None], 
+                [None, None, None, None], 
+                [None, None, None, None]
+            ],
+            "makeBoard"
+        ),
     ]
 
     for i in range(len(tests)):
@@ -121,10 +153,19 @@ if __name__ == "__main__":
                 print("Expected {0}, but got {1}!\n".format(tests[i][2], winner))
             else:
                 print("{} passed!\n".format(tests[i][0]))
+
         elif tests[i][3] == "findTie":
             tie = findTie(tests[i][1])
             if tie != tests[i][2]:
                 print("There was a problem with the {}!".format(tests[i][0]))
                 print("Expected {0}, but got {1}!\n".format(tests[i][2], tie))
+            else:
+                print("{} passed!\n".format(tests[i][0]))
+
+        elif tests[i][3] == "makeBoard":
+            board = makeBoard(tests[i][1])
+            if board != tests[i][2]:
+                print("There was a problem with the {}!".format(tests[i][0]))
+                print("Expected {0}, but got {1}!\n".format(tests[i][2], board))
             else:
                 print("{} passed!\n".format(tests[i][0]))

@@ -1,38 +1,50 @@
 import copy
 
-def makeBoard():
-    return [[None, None, None], [None, None, None], [None, None, None]]
+def makeBoard(sizeTuple):
+    board = []
+    length = []
+    for x in range(sizeTuple[0]):
+        length.append(None)
+    for y in range(sizeTuple[1]):
+        board.append(length)
+    return board
 
 def render(board):
-    # | [0][0] | [0][1] | [0][2] |
-    #
-    # | [1][0] | [1][1] | [1][2] |
-    #
-    # | [2][0] | [2][1] | [2][2] |
-
-    print(" | {0} | {1} | {2} |\n".format(board[0][0], board[0][1], \
-                                          board[0][2]).replace("None", " "),
-          "| {0} | {1} | {2} |\n".format(board[1][0], board[1][1], \
-                                         board[1][2]).replace("None", " "),
-          "| {0} | {1} | {2} |\n".format(board[2][0], board[2][1], \
-                                         board[2][2]).replace("None", " "))
+    pos = 0
+    # TODO fix misalignment
+    for y in range(len(board)):
+        line = "|"
+        for x in range(len(board[0])):
+            pos += 1
+            if board[y][x] is None:
+                line += " " + str(pos) + " |"
+            else:
+                line += " " + str(board[y][x]) + " |"
+        print(line)
     return
 
-def getMove():
+def possMoves(board, size):
     # Converts from integer positions to the index values usable by
     # the board list
-    posMoves = {1:[0, 0], 2:[0, 1], 3:[0, 2],
-                4:[1, 0], 5:[1, 1], 6:[1, 2],
-                7:[2, 0], 8:[2, 1], 9:[2, 2]}
+    possDic = {}
+    i = 1
+    for y in range(len(board)):
+        for x in range(len(board[0])):
+            possDic.update({i:[y, x]})
+            i += 1
+    return possDic
+
+def getMove(board, size):
+    dictMoves = possMoves(board, size)
 
     # Ensures that the value given is compatible with the board
     while True:
         try:
             ans = int(input("Where do you want to play:\n"))
-            if ans > 9 or ans < 0:
+            if ans > (size[0] * size[1]) or ans < 0:
                 print("Your number does not meet the board size. Please try again.")
             else:
-                return posMoves.get(ans)   
+                return dictMoves.get(ans)   
         except ValueError:
             print("Invalid Command. Please try again")
     
@@ -61,6 +73,7 @@ def chooseSide():
         else:
             print("Invalid Side")
 
+# TODO change findWinner and findTie to account for variable size
 def findWinner(board):
     # Checks horizontal
     for i in range(3):
@@ -102,11 +115,13 @@ def findTie(board):
 
 # __name__ == "__main__" allows for unit testing to occur properly
 if __name__ == "__main__":
-    board = makeBoard()
+    # (x size, y size)
+    size = (4, 4)
+    board = makeBoard(size)
     flip = chooseSide()
 
     while True:
-        move = getMove()
+        move = getMove(board, size)
         if not validMove(board, move):
             print("You picked an invalid spot!")
         else:
