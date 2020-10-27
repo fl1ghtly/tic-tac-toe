@@ -4,7 +4,7 @@ if __name__ == "__main__":
     # (Test Name, Test Init, Solution, Function)
     tests = [
         (
-            "Vertical Test X", [
+            "Vertical Test X 1", [
                 ["X", None, None], 
                 ["X", None, None], 
                 ["X", None, None]
@@ -13,7 +13,17 @@ if __name__ == "__main__":
             "findWinner"
         ),
         (
-            "Horizontal Test X", [
+            "Vertical Test X 2", [
+                ["X", None, None, None], 
+                ["X", None, None, None], 
+                ["X", None, None, None],
+                ["X", None, None, None]
+                ],
+            "X",
+            "findWinner"
+        ),
+        (
+            "Horizontal Test X 1", [
                 ["X", "X", "X"], 
                 [None, None, None], 
                 [None, None, None]
@@ -22,7 +32,16 @@ if __name__ == "__main__":
             "findWinner"
         ),
         (
-            "Vertical Test O", [
+            "Horizontal Test X 2", [
+                ["X", "X", "X", "X"], 
+                [None, None, None, None], 
+                [None, None, None, None]
+                ],
+            "X",
+            "findWinner"
+        ),
+        (
+            "Vertical Test O 1", [
                 ["O", None, None], 
                 ["O", None, None], 
                 ["O", None, None]
@@ -31,10 +50,29 @@ if __name__ == "__main__":
             "findWinner"
         ),
         (
-            "Horizontal Test O", [
+            "Vertical Test O 2", [
+                ["O", None, None], 
+                ["O", None, None], 
+                ["O", None, None],
+                ["O", None, None]
+                ],
+            "O",
+            "findWinner"
+        ),
+        (
+            "Horizontal Test O 1", [
                 ["O", "O", "O"], 
                 [None, None, None], 
                 [None, None, None]
+                ],
+            "O",
+            "findWinner"
+        ),
+        (
+            "Horizontal Test O 2", [
+                ["O", "O", "O", "O"], 
+                [None, None, None, None], 
+                [None, None, None, None]
                 ],
             "O",
             "findWinner"
@@ -145,6 +183,7 @@ if __name__ == "__main__":
         ),
     ]
 
+    print("Testing the program... \n")
     for i in range(len(tests)):
         if tests[i][3] == "findWinner":
             winner = findWinner(tests[i][1])

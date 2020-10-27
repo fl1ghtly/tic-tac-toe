@@ -73,19 +73,44 @@ def chooseSide():
         else:
             print("Invalid Side")
 
+def hzWinner(board):
+    # Checks each horizontal line for a winner
+    for y in range(len(board)):
+        for x in range(len(board[0])):
+            if board[y][x] is not None:
+                # Compares current to next tile,
+                # If the same, then continue
+                # Once reaching the end, it returns the winning side
+                if x + 1 >= len(board[0]):
+                    # Chosen board index to return is arbitrary since
+                    # all of them should return the same character
+                    return board[y][x]
+                elif board[y][x] != board[y][x+1]:
+                        return False
+            else:
+                # Any row that has None in it is not considered for winning
+                y += 1
+
+def vtWinner(board):
+    for x in range(len(board[0])):
+        for y in range(len(board)):
+            if board[y][x] is not None:
+                if y + 1 >= len(board):
+                    return board[y][x]
+                elif board[y][x] != board[y+1][x]:
+                        return False
+            else:
+                x += 1
+
+        
 # TODO change findWinner and findTie to account for variable size
 def findWinner(board):
-    # Checks horizontal
-    for i in range(3):
-        if board[i][0] == board[i][1] == board[i][2]:
-            # Chosen board index to return is arbitrary since
-            # all of them should return the same character
-            return board[i][0]
-
-    # Checks vertical
-    for j in range(3):
-        if board[0][j] == board[1][j] == board[2][j]:
-            return board[0][j]
+    hz = hzWinner(board)
+    if hz is not False:
+        return hz
+    vt = vtWinner(board)
+    if vt is not False:
+        return vt
 
     # Checks diagonal
     # Top Left to Bottom Right Diag
