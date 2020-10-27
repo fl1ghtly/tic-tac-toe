@@ -5,19 +5,19 @@ if __name__ == "__main__":
     tests = [
         (
             "Vertical Test X 1", [
-                ["X", None, None], 
-                ["X", None, None], 
-                ["X", None, None]
+                [None, "X", None], 
+                [None, "X", None], 
+                [None, "X", None]
                 ],
             "X",
             "findWinner"
         ),
         (
             "Vertical Test X 2", [
-                ["X", None, None, None], 
-                ["X", None, None, None], 
-                ["X", None, None, None],
-                ["X", None, None, None]
+                [None, None, "X", None], 
+                [None, None, "X", None], 
+                [None, None, "X", None],
+                [None, None, "X", None]
                 ],
             "X",
             "findWinner"
@@ -61,8 +61,8 @@ if __name__ == "__main__":
         ),
         (
             "Horizontal Test O 1", [
-                ["O", "O", "O"], 
                 [None, None, None], 
+                ["O", "O", "O"], 
                 [None, None, None]
                 ],
             "O",
@@ -96,16 +96,36 @@ if __name__ == "__main__":
             "findWinner"
         ),
         (
-            "Bottom Left Diagonal Test", [
-                [None, None, "X"], 
-                [None, "X", None], 
-                ["X", None, None]
+            "Bottom Left Diagonal Test 1", [
+                [None, None, "O"], 
+                [None, "O", None], 
+                ["O", None, None]
                 ],
-            "X",
+            "O",
             "findWinner"
         ),
         (
-            "Top Left Diagonal Test", [
+            "Bottom Left Diagonal Test 2", [
+                [None, None, None, "O"],
+                [None, None, "O", None], 
+                [None, "O", None, None], 
+                ["O", None, None, None]
+                ],
+            "O",
+            "findWinner"
+        ),
+        (
+            "Bottom Left Diagonal Test 3", [
+                [None, None, None, "O"],
+                [None, None, "O", None], 
+                [None, None, None, None], 
+                ["O", None, None, None]
+                ],
+            None,
+            "findWinner"
+        ),
+        (
+            "Top Left Diagonal Test 1", [
                 ["X", None, None], 
                 [None, "X", None], 
                 [None, None, "X"]
@@ -114,9 +134,29 @@ if __name__ == "__main__":
             "findWinner"
         ),
         (
+            "Top Left Diagonal Test 2", [
+                ["X", None, None, None], 
+                [None, "X", None, None], 
+                [None, None, "X", None],
+                [None, None, None,"X"]
+                ],
+            "X",
+            "findWinner"
+        ),
+        (
+            "Top Left Diagonal Test 3", [
+                ["X", None, None, None], 
+                [None, "X", None, None], 
+                [None, None, None, None],
+                [None, None, None, "X"]
+                ],
+            None,
+            "findWinner"
+        ),
+        (
             "Mixed Columns Test", [
                 ["X", "O", "X"], 
-                ["X", "O", "X"], 
+                ["O", "O", "X"], 
                 ["O", "X", "X"]
                 ],
             "X",

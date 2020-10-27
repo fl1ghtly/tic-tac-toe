@@ -6,7 +6,8 @@ def makeBoard(sizeTuple):
     for x in range(sizeTuple[0]):
         length.append(None)
     for y in range(sizeTuple[1]):
-        board.append(length)
+        new = copy.deepcopy(length)
+        board.append(new)
     return board
 
 def render(board):
@@ -75,51 +76,61 @@ def chooseSide():
 
 def hzWinner(board):
     # Checks each horizontal line for a winner
-    for y in range(len(board)):
-        for x in range(len(board[0])):
-            if board[y][x] is not None:
-                # Compares current to next tile,
-                # If the same, then continue
-                # Once reaching the end, it returns the winning side
-                if x + 1 >= len(board[0]):
-                    # Chosen board index to return is arbitrary since
-                    # all of them should return the same character
-                    return board[y][x]
-                elif board[y][x] != board[y][x+1]:
-                        return False
-            else:
-                # Any row that has None in it is not considered for winning
-                y += 1
-
+    for hz in board:
+        if hz[0] is not None:
+            if hz.count(hz[0]) == len(hz):
+                return hz[0]
+                
 def vtWinner(board):
     for x in range(len(board[0])):
+        vt = []
         for y in range(len(board)):
-            if board[y][x] is not None:
-                if y + 1 >= len(board):
-                    return board[y][x]
-                elif board[y][x] != board[y+1][x]:
-                        return False
-            else:
-                x += 1
+            vt.append(board[y][x])
+        if vt[0] is not None:
+            if vt.count(vt[0]) == len(vt):
+                return vt[0]
 
-        
+def diagWinner(board):
+    # Diagonal only works for boards of even size
+
+    # Top Left to Bottom Right
+    if len(board) == len(board[0]):
+        # If there is nothing in the top left, there cant be a top left diagonal
+        if board[0][0] is not None:
+            topLeft = []
+            for i in range(len(board)):
+                topLeft.append(board[i][i])
+            # if the amount of tiles matches the length of the list
+            # then it is a diagonal win
+            if topLeft.count(topLeft[0]) == len(topLeft):
+                return topLeft[0]
+            else: 
+                return False
+
+    # Bottom Left to Top Right
+        if board[len(board) - 1][0] is not None:
+            bottomLeft = []
+            for j in range(len(board)):
+                bottomLeft.append(board[len(board) - 1 - j][j])
+            if bottomLeft.count(bottomLeft[0]) == len(bottomLeft):
+                return bottomLeft[0]
+            else: 
+                return False
+
+                
 # TODO change findWinner and findTie to account for variable size
 def findWinner(board):
     hz = hzWinner(board)
-    if hz is not False:
+    if hz is not None:
         return hz
     vt = vtWinner(board)
-    if vt is not False:
+    if vt is not None:
         return vt
 
-    # Checks diagonal
-    # Top Left to Bottom Right Diag
-    if board[0][0] == board[1][1] == board[2][2]:
-        return board[0][0]
-    # Bottom Left to Top Right Diag
-    if board[2][0] == board[1][1] == board[0][2]:
-        return board[2][0]
-    
+    diag = diagWinner(board)
+    if diag is not False:
+        return diag
+
     # If none are found
     return None
 
@@ -141,7 +152,7 @@ def findTie(board):
 # __name__ == "__main__" allows for unit testing to occur properly
 if __name__ == "__main__":
     # (x size, y size)
-    size = (4, 4)
+    size = (3, 3)
     board = makeBoard(size)
     flip = chooseSide()
 
