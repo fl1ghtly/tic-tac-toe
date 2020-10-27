@@ -12,15 +12,18 @@ def makeBoard(sizeTuple):
 
 def render(board):
     pos = 0
-    # TODO fix misalignment
     for y in range(len(board)):
         line = "|"
         for x in range(len(board[0])):
             pos += 1
             if board[y][x] is None:
-                line += " " + str(pos) + " |"
+                # If you willingly play above 10 by 10 you are insane
+                if pos > 9:
+                    line += " " + str(pos) + " |"
+                else:
+                    line += "  " + str(pos) + " |"
             else:
-                line += " " + str(board[y][x]) + " |"
+                line += "  " + str(board[y][x]) + " |"
         print(line)
     return
 
@@ -42,7 +45,7 @@ def getMove(board, size):
     while True:
         try:
             ans = int(input("Where do you want to play:\n"))
-            if ans > (size[0] * size[1]) or ans < 0:
+            if ans > (size[0] * size[1]) or ans <= 0:
                 print("Your number does not meet the board size. Please try again.")
             else:
                 return dictMoves.get(ans)   
@@ -117,7 +120,6 @@ def diagWinner(board):
             else: 
                 return False
 
-                
 # TODO change findWinner and findTie to account for variable size
 def findWinner(board):
     hz = hzWinner(board)
@@ -152,9 +154,12 @@ def findTie(board):
 # __name__ == "__main__" allows for unit testing to occur properly
 if __name__ == "__main__":
     # (x size, y size)
-    size = (3, 3)
+    xSize = int(input("What is your preferred length: "))
+    ySize = int(input("What is your preferred height: "))
+    size = (xSize, ySize)
     board = makeBoard(size)
     flip = chooseSide()
+    render(board)
 
     while True:
         move = getMove(board, size)
