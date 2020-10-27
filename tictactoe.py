@@ -136,8 +136,8 @@ def findWinner(board):
 
 def findTie(board):
     # Looks for available spaces
-    for i in range(3):
-        for j in range(3):
+    for i in range(len(board)):
+        for j in range(len(board[0])):
             if board[i][j] is None:
                 return False
 

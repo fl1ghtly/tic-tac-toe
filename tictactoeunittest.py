@@ -190,6 +190,15 @@ if __name__ == "__main__":
             "findTie"
         ),
         (
+            "Tie Situation 4", [
+                ["X", "O", "X", "O"], 
+                ["X", "O", "X", "X"], 
+                ["O", "X", "O", "O"]
+                ],
+            True,
+            "findTie"
+        ),
+        (
             "Variable Board 1",
             (4,4),
             [
